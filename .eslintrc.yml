@@ -6,6 +6,14 @@ env:
 parserOptions:
   ecmaVersion: 8
   sourceType: module
+globals:
+  sails: true
+  _: true
+  # services
+  MovieService: true
+  # models
+  Comment: true
+
 rules:
   max-len:
     - 0
