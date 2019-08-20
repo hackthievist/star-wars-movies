@@ -11,6 +11,7 @@ module.exports = {
     body: {
       type: 'string',
       required: true,
+      maxLength: 500,
     },
     movieId: {
       type: 'integer',
