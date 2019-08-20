@@ -39,8 +39,6 @@ yarn start
 
 ### Using Docker Standalone - Compose (Recomended for local development)
 
-* Copy the files `docker-config/secrets.env.example`, `docker-config/config.env.example` to `docker-config/secrets.env`, `docker-config/config.env` and substitute the settings to match your development environment.
-
 Make sure postgres is installed locally by running `psql`
 
 ```shell
