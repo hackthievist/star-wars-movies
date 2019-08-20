@@ -12,6 +12,7 @@ const _ = require('lodash');
 const Promise = require('bluebird');
 
 module.exports.bootstrap = function (cb) {
+  sails.hooks.http.app.set('trust proxy', true);
   global._ = _;
   global.Promise = Promise;
   // It's very important to trigger this callback method when you are finished
