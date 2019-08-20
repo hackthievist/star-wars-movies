@@ -41,11 +41,7 @@ yarn start
 
 * Copy the files `docker-config/secrets.env.example`, `docker-config/config.env.example` to `docker-config/secrets.env`, `docker-config/config.env` and substitute the settings to match your development environment.
 
-Make sure postgres is installed and running with IP bound to docker service `postgres`
-
-```shell
-psql --bind_ip postgres
-```
+Make sure postgres is installed locally by running `psql`
 
 ```shell
 docker-compose up -d
