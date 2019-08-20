@@ -47,9 +47,13 @@ module.exports.routes = {
   },
 
   // Comment routes
-  'POST /movies/comment': {
+  'POST /movies/comments': {
     controller: 'CommentController',
     action: 'create',
+  },
+  'GET /movies/:id/comments': {
+    controller: 'CommentController',
+    action: 'list',
   },
 
   /** *************************************************************************
