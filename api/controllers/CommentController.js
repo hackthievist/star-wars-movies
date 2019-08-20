@@ -28,4 +28,26 @@ module.exports = {
     }
   },
 
+  async list(req, res) {
+    try {
+      const { id: movieId } = req.params;
+      const movie = await MovieService.getMovie(movieId);
+      if (!movie) {
+        return res.status(404).send({
+          error: 'Movie not found',
+        });
+      }
+      const comments = await Comment.find({ movieId }).sort('createdAt desc');
+      return res.status(200).send({
+        message: 'Comments retrieved successully',
+        data: { movie: movie.title, comments },
+      });
+    } catch (err) {
+      return res.status(500).send({
+        message: 'An error occurred',
+        error: err.details,
+      });
+    }
+  },
+
 };
