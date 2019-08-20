@@ -15,13 +15,16 @@ module.exports = {
           error: 'Movie not found',
         });
       }
-      const comment = await Comment.create({ body, movie });
+      const comment = await Comment.create({ body, movieId, ip: req.ip });
       return res.status(201).send({
         message: 'Comment successfully posted',
         data: comment,
       });
     } catch (err) {
-      return res.status(500).send(err);
+      return res.status(500).send({
+        message: 'An error occurred',
+        error: err.details,
+      });
     }
   },
 

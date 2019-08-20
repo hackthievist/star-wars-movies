@@ -41,9 +41,13 @@ module.exports.routes = {
     controller: 'MovieController',
     action: 'list',
   },
+  'GET /movies/:id/characters': {
+    controller: 'MovieController',
+    action: 'listCharacters',
+  },
 
   // Comment routes
-  'POST /movie/comment': {
+  'POST /movies/comment': {
     controller: 'CommentController',
     action: 'create',
   },
