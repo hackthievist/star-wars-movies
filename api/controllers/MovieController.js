@@ -49,9 +49,9 @@ module.exports = {
       if (filterBy && filterValue) {
         characters = characters.filter((character) => character[filterBy] === filterValue);
       }
-      // if (sortBy && typeof characters[0][sortBy] === 'number') {
-      //   characters = characters.sort((a, b) => a - b);
-      // }
+      if (sortBy && sortBy === 'height') {
+        characters = characters.sort((a, b) => a[sortBy] - b[sortBy]);
+      }
       if (sortDir && sortDir === 'desc') _.reverse(characters);
 
       const totalHeightInCm = characters.reduce((totalHeight, currentCharacter) => {
