@@ -14,6 +14,10 @@ module.exports = {
     },
     movieId: {
       type: 'integer',
+      required: true,
+    },
+    ip: {
+      type: 'string',
     },
   },
 };
