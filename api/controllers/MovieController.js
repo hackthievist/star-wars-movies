@@ -20,7 +20,64 @@ module.exports = {
         data: movieData,
       });
     } catch (err) {
-      return res.status(500).send(err);
+      return res.status(500).send({
+        message: 'An error occurred',
+        error: err.details,
+      });
+    }
+  },
+
+  async listCharacters(req, res) {
+    try {
+      const { id } = req.params;
+      const {
+        sortBy, sortDir, filterBy, filterValue,
+      } = req.query;
+      const movie = await MovieService.getMovie(id);
+      if (!movie) {
+        return res.status(404).send({
+          error: 'Movie not found',
+        });
+      }
+      let characters = await MovieService.getCharacters(movie.characters);
+      if (sortBy && typeof characters[0][sortBy] !== 'number') {
+        characters = _.sortBy(characters, [function (each) {
+          return each[sortBy];
+        }]);
+      }
+
+      if (filterBy && filterValue) {
+        characters = characters.filter((character) => character[filterBy] === filterValue);
+      }
+      // if (sortBy && typeof characters[0][sortBy] === 'number') {
+      //   characters = characters.sort((a, b) => a - b);
+      // }
+      if (sortDir && sortDir === 'desc') _.reverse(characters);
+
+      const totalHeightInCm = characters.reduce((totalHeight, currentCharacter) => {
+        // eslint-disable-next-line no-param-reassign
+        totalHeight += currentCharacter.height === 'unknown' ? 0 : parseInt(currentCharacter.height, 10);
+        return totalHeight;
+      }, 0);
+
+      const feetAndInchesConversionValue = totalHeightInCm / 30.48;
+      const feet = Math.floor(feetAndInchesConversionValue);
+      const inches = (feetAndInchesConversionValue % 1) * 12;
+      const totalHeightInFeetAndInches = `${feet}ft and ${inches.toFixed(2)} inches`;
+      return res.status(200).send({
+        message: 'Characters retrieved successfully',
+        data: characters,
+        meta: {
+          characterCount: characters.length,
+          totalHeightInCm,
+          totalHeightInFeetAndInches,
+        },
+      });
+    } catch (err) {
+      return res.status(500).send({
+        message: 'An error occurred',
+        error: err.details,
+      });
     }
   },
 
