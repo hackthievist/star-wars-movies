@@ -21,4 +21,12 @@ module.exports = {
       type: 'string',
     },
   },
+  validationMessages: {
+    body: {
+      required: 'Comment body is required',
+    },
+    movieId: {
+      required: 'Movie ID is required',
+    },
+  },
 };

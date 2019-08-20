@@ -9,7 +9,7 @@ module.exports = {
   async list(req, res) {
     try {
       const movies = await MovieService.getMovies();
-      // sort movies in ascending order by date
+      // sort movies by release date from earliest to newest
       movies.sort((currentMovie, nextMovie) => new Date(currentMovie.release_date) - new Date(nextMovie.release_date));
       const movieData = await Promise.all(movies.map(async (each) => {
         const comments = await Comment.count({ movieId: each.episode_id });
@@ -40,17 +40,20 @@ module.exports = {
         });
       }
       let characters = await MovieService.getCharacters(movie.characters);
+      // sort string values (name, gender)
       if (sortBy && typeof characters[0][sortBy] !== 'number') {
         characters = _.sortBy(characters, [function (each) {
           return each[sortBy];
         }]);
       }
-
-      if (filterBy && filterValue) {
-        characters = characters.filter((character) => character[filterBy] === filterValue);
-      }
+      // sort number values (height)
       if (sortBy && sortBy === 'height') {
         characters = characters.sort((a, b) => a[sortBy] - b[sortBy]);
+      }
+
+      // filter values by passed query parameters (e.g gender)
+      if (filterBy && filterValue) {
+        characters = characters.filter((character) => character[filterBy] === filterValue);
       }
       if (sortDir && sortDir === 'desc') _.reverse(characters);
 
@@ -64,6 +67,7 @@ module.exports = {
       const feet = Math.floor(feetAndInchesConversionValue);
       const inches = (feetAndInchesConversionValue % 1) * 12;
       const totalHeightInFeetAndInches = `${feet}ft and ${inches.toFixed(2)} inches`;
+
       return res.status(200).send({
         message: 'Characters retrieved successfully',
         data: characters,
