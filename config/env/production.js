@@ -2,9 +2,9 @@ module.exports = {
   port: process.env.PORT,
   connections: {
     postgres: {
-      adapter: 'sails-mysql',
+      adapter: 'sails-postgresql',
       pool: true,
-      ssl: false,
+      ssl: true,
       url: process.env.DB_URL,
     },
   },
