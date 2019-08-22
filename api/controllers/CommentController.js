@@ -15,7 +15,7 @@ module.exports = {
           error: 'Movie not found',
         });
       }
-      const comment = await Comment.create({ body, movieId, ip: req.ip });
+      const comment = await Comment.create({ body, episodeId: movie.episode_id, ip: req.ip });
       return res.status(201).send({
         message: 'Comment successfully posted',
         data: comment,

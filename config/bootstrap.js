@@ -8,13 +8,15 @@
  * For more information on bootstrapping your app, check out:
  * http://sailsjs.org/#!/documentation/reference/sails.config/sails.config.bootstrap.html
  */
-const _ = require('lodash');
 const Promise = require('bluebird');
+const redis = require('async-redis');
 
 module.exports.bootstrap = function (cb) {
   sails.hooks.http.app.set('trust proxy', true);
+  const redisClient = redis.createClient(sails.config.redis);
   global._ = _;
   global.Promise = Promise;
+  global.redisClient = redisClient;
   // It's very important to trigger this callback method when you are finished
   // with the bootstrap!  (otherwise your server will never lift, since it's waiting on the bootstrap)
   cb();

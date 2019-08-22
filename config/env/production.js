@@ -17,4 +17,7 @@ module.exports = {
       baseUrl: 'https://swapi.co/api',
     },
   },
+  redis: {
+    url: process.env.REDIS_URL,
+  }
 };
