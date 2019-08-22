@@ -69,4 +69,14 @@ module.exports = {
       return err;
     }
   },
+
+  async getRedisValue(key) {
+    try {
+      const stringData = await redisClient.get(key);
+      const redisValue = JSON.parse(stringData);
+      return redisValue;
+    } catch (err) {
+      return err;
+    }
+  },
 };
