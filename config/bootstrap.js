@@ -8,7 +8,6 @@
  * For more information on bootstrapping your app, check out:
  * http://sailsjs.org/#!/documentation/reference/sails.config/sails.config.bootstrap.html
  */
-const _ = require('lodash');
 const Promise = require('bluebird');
 
 module.exports.bootstrap = function (cb) {
