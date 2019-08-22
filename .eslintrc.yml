@@ -8,7 +8,7 @@ parserOptions:
   sourceType: module
 globals:
   sails: true
-  _: true
+  redisClient: true
   # services
   CommentService: true
   MovieService: true
