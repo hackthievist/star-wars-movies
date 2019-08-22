@@ -10,13 +10,10 @@ module.exports = {
     try {
       const movies = await MovieService.getMovies();
       // sort movies by release date from earliest to newest
-      movies.sort((currentMovie, nextMovie) => new Date(currentMovie.release_date) - new Date(nextMovie.release_date));
-      const movieData = await Promise.all(movies.map(async (each) => {
-        const comments = await Comment.count({ movieId: each.episode_id });
-        return { title: each.title, opening_crawl: each.opening_crawl, comments };
-      }));
+      const sortedMovies = await UtilityService.sortData({ array: movies, objectKey: 'release_date' });
+      const movieData = await CommentService.addCommentsToMovies(sortedMovies);
       return res.status(200).send({
-        message: 'Movie successfully retrieved',
+        message: 'Movies successfully retrieved',
         data: movieData,
       });
     } catch (err) {
@@ -40,41 +37,23 @@ module.exports = {
         });
       }
       let characters = await MovieService.getCharacters(movie.characters);
-      // sort string values (name, gender)
-      if (sortBy && typeof characters[0][sortBy] !== 'number') {
-        characters = _.sortBy(characters, [function (each) {
-          return each[sortBy];
-        }]);
-      }
-      // sort number values (height)
-      if (sortBy && sortBy === 'height') {
-        characters = characters.sort((a, b) => a[sortBy] - b[sortBy]);
+
+      if (sortBy) {
+        characters = UtilityService.sortData({ array: characters, objectKey: sortBy, sortDir });
       }
 
-      // filter values by passed query parameters (e.g gender)
       if (filterBy && filterValue) {
-        characters = characters.filter((character) => character[filterBy] === filterValue);
+        characters = UtilityService.filterCharacters({ array: characters, key: filterBy, value: filterValue });
       }
-      if (sortDir && sortDir === 'desc') _.reverse(characters);
 
-      const totalHeightInCm = characters.reduce((totalHeight, currentCharacter) => {
-        // eslint-disable-next-line no-param-reassign
-        totalHeight += currentCharacter.height === 'unknown' ? 0 : parseInt(currentCharacter.height, 10);
-        return totalHeight;
-      }, 0);
-
-      const feetAndInchesConversionValue = totalHeightInCm / 30.48;
-      const feet = Math.floor(feetAndInchesConversionValue);
-      const inches = (feetAndInchesConversionValue % 1) * 12;
-      const totalHeightInFeetAndInches = `${feet}ft and ${inches.toFixed(2)} inches`;
+      const heightData = UtilityService.getHeightData(characters);
 
       return res.status(200).send({
         message: 'Characters retrieved successfully',
         data: characters,
         meta: {
           characterCount: characters.length,
-          totalHeightInCm,
-          totalHeightInFeetAndInches,
+          ...heightData,
         },
       });
     } catch (err) {

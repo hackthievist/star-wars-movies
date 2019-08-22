@@ -21,13 +21,11 @@
     "grunt-sync": "0.5.2",
     "husky": "^3.0.4",
     "include-all": "^1.0.0",
-    "lodash": "^4.17.15",
     "node-fetch": "^2.6.0",
     "rc": "1.0.1",
     "sails": "~0.12.13",
     "sails-disk": "~0.10.9",
     "sails-hook-validation": "^0.4.7",
-    "sails-mysql": "0.11.4",
     "sails-postgresql": "0.11.4"
   },
   "scripts": {

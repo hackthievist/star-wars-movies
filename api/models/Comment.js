@@ -13,7 +13,7 @@ module.exports = {
       required: true,
       maxLength: 500,
     },
-    movieId: {
+    episodeId: {
       type: 'integer',
       required: true,
     },
@@ -25,8 +25,8 @@ module.exports = {
     body: {
       required: 'Comment body is required',
     },
-    movieId: {
-      required: 'Movie ID is required',
+    episodeId: {
+      required: 'Episode ID is required',
     },
   },
 };
