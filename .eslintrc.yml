@@ -4,13 +4,15 @@ env:
   node: true
   jest: true
 parserOptions:
-  ecmaVersion: 8
+  ecmaVersion: 2018
   sourceType: module
 globals:
   sails: true
   _: true
   # services
+  CommentService: true
   MovieService: true
+  UtilityService: true
   # models
   Comment: true
 
