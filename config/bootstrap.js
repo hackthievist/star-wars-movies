@@ -10,11 +10,14 @@
  */
 const Promise = require('bluebird');
 const redis = require('async-redis');
+const Chance = require('chance');
 
 module.exports.bootstrap = function (cb) {
   sails.hooks.http.app.set('trust proxy', true);
+  const chance = new Chance();
   const redisClient = redis.createClient(sails.config.redis);
   global._ = _;
+  global.chance = chance;
   global.Promise = Promise;
   global.redisClient = redisClient;
   // It's very important to trigger this callback method when you are finished
