@@ -28,17 +28,20 @@
     "sails": "~0.12.13",
     "sails-disk": "~0.10.9",
     "sails-hook-validation": "^0.4.7",
+    "sails-memory": "^0.10.7",
     "sails-postgresql": "0.11.4"
   },
   "scripts": {
     "debug": "node debug app.js",
     "start": "node app.js",
     "dev": "NODE_ENV=development nodemon app.js",
-    "lint": "eslint . --fix"
+    "lint": "eslint . --fix",
+    "test": "NODE_ENV=test mocha --timeout=15000 test/bootstrap.test.js test/**/* --exit"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn lint"
+      "pre-commit": "yarn lint",
+      "pre-push": "yarn test"
     }
   },
   "main": "app.js",
@@ -49,8 +52,13 @@
   "author": "hackthievist",
   "license": "",
   "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-things": "^0.2.0",
     "eslint": "^6.2.0",
     "eslint-config-airbnb-base": "^14.0.0",
-    "eslint-plugin-import": "^2.18.2"
+    "eslint-plugin-import": "^2.18.2",
+    "mocha": "^6.2.0",
+    "sinon": "^7.4.1",
+    "supertest": "^4.0.2"
   }
 }

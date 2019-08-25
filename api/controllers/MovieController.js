@@ -46,7 +46,7 @@ module.exports = {
       const heightData = UtilityService.getHeightData(filteredCharacters);
 
       return res.status(200).send({
-        message: 'Characters retrieved successfully',
+        message: 'Characters successfully retrieved',
         data: filteredCharacters,
         meta: {
           characterCount: filteredCharacters.length,
