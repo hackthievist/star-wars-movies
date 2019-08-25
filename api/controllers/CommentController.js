@@ -39,7 +39,7 @@ module.exports = {
       }
       const comments = await Comment.find({ episodeId: movie.episode_id }).sort('createdAt desc');
       return res.status(200).send({
-        message: 'Comments retrieved successully',
+        message: 'Comments retrieved successfully',
         data: { movie: movie.title, comments },
       });
     } catch (err) {
