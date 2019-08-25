@@ -3,7 +3,7 @@ module.exports = {
     const comments = await Comment.find();
     const movieData = movies.reduce((acc, cur) => {
       const foundComments = comments.filter((comment) => comment.episodeId === cur.episode_id);
-      acc.push({ title: cur.title, opening_crawl: cur.opening_crawl, comments: foundComments });
+      acc.push({ ...cur, comments: foundComments.length });
       return acc;
     }, []);
     return movieData;
