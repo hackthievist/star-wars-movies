@@ -1,0 +1,12 @@
+globals:
+  # These globals are for specs. ESLint doesn't have a way to just whitelist
+  # for .spec.js only.
+  sails: true
+  Promise: false
+  sinon: false
+  chance: false
+  should: false
+  chai: false
+  expect: false
+  assert: false
+  request: false
