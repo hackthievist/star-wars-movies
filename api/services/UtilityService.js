@@ -1,26 +1,33 @@
 module.exports = {
+  checkIfNumber(array, objectKey) {
+    if (isNaN(array[0][objectKey]) === false) {
+      const modifiedArray = array.map((each) => {
+        const numValue = parseInt(each[objectKey], 10);
+        const newObject = Object.assign(each, { [objectKey]: numValue });
+        return newObject;
+      });
+      return modifiedArray;
+    }
+    return array;
+  },
   sortData({ array, objectKey, sortDir }) {
     try {
-      let sortedArray;
-      // sort string values (name, gender)
-      if (typeof array[0][objectKey] !== 'number') {
-        sortedArray = array.sort((a, b) => {
-          if (a[objectKey] < b[objectKey]) {
-            return -1;
-          }
-          if (a[objectKey] > b[objectKey]) {
-            return 1;
-          }
-          return 0;
-        });
-      }
-      // sort number values (height)
-      if (objectKey && typeof objectKey === 'number') {
-        sortedArray = array.sort((a, b) => a[objectKey] - b[objectKey]);
-      }
+      const modifiedArray = UtilityService.checkIfNumber(array, objectKey);
+      const sortedArrayAsc = modifiedArray.sort((a, b) => {
+        if (a[objectKey] < b[objectKey]) {
+          return -1;
+        }
+        if (a[objectKey] > b[objectKey]) {
+          return 1;
+        }
+        return 0;
+      });
 
-      if (sortDir && sortDir === 'desc') sortedArray.reverse();
-      return sortedArray;
+      if (sortDir && sortDir === 'desc') {
+        const sortedArrayDesc = [...sortedArrayAsc].reverse();
+        return sortedArrayDesc;
+      }
+      return sortedArrayAsc;
     } catch (err) {
       return err;
     }
@@ -78,5 +85,17 @@ module.exports = {
     } catch (err) {
       return err;
     }
+  },
+
+  pickFields(array) {
+    const x = array.map((each) => {
+      const {
+        title, opening_crawl, release_date, comments,
+      } = each;
+      return {
+        title, opening_crawl, release_date, comments,
+      };
+    });
+    return x;
   },
 };

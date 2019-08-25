@@ -9,6 +9,7 @@ parserOptions:
 globals:
   sails: true
   redisClient: true
+  chance: true
   # services
   CommentService: true
   MovieService: true
@@ -30,7 +31,8 @@ rules:
     "functions": "ignore"
   }]
   no-underscore-dangle: 0
-  no-plusplus: 0
+  no-restricted-globals: 0
   func-names: 0
+  camelcase: 0
   import/order: 0
   no-await-in-loop: 0

@@ -5,16 +5,15 @@ const { baseUrl } = sails.config.settings.api;
 module.exports = {
   async getMovie(id) {
     try {
-      let movie;
       const url = `${baseUrl}/films/${id}`;
       const redisKey = url;
       const keyExists = await redisClient.exists(redisKey);
       if (keyExists === 1) {
-        movie = await UtilityService.getRedisValue(redisKey);
-        return movie;
+        const cachedMovieData = await UtilityService.getRedisValue(redisKey);
+        return cachedMovieData;
       }
       const response = await fetch(url);
-      movie = await response.json();
+      const movie = await response.json();
       if (movie.detail && movie.detail === 'Not found') return null;
       await redisClient.set(redisKey, JSON.stringify(movie));
       return movie;
@@ -25,19 +24,18 @@ module.exports = {
 
   async getMovies() {
     try {
-      let movies;
       const url = `${baseUrl}/films`;
       const redisKey = url;
       const keyExists = await redisClient.exists(redisKey);
       if (keyExists === 1) {
-        movies = await UtilityService.getRedisValue(redisKey);
-        return movies;
+        const cachedMovies = await UtilityService.getRedisValue(redisKey);
+        return cachedMovies;
       }
       const response = await fetch(url);
-      movies = await response.json();
-      const { results } = movies;
-      await redisClient.set(redisKey, JSON.stringify(results));
-      return results;
+      const jsonResponse = await response.json();
+      const { results: movies } = jsonResponse;
+      await redisClient.set(redisKey, JSON.stringify(movies));
+      return movies;
     } catch (err) {
       return err;
     }

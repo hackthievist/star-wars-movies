@@ -12,9 +12,10 @@ module.exports = {
       // sort movies by release date from earliest to newest
       const sortedMovies = await UtilityService.sortData({ array: movies, objectKey: 'release_date' });
       const movieData = await CommentService.addCommentsToMovies(sortedMovies);
+      const redactedMovieData = UtilityService.pickFields(movieData);
       return res.status(200).send({
         message: 'Movies successfully retrieved',
-        data: movieData,
+        data: redactedMovieData,
       });
     } catch (err) {
       return res.status(500).send({
@@ -36,23 +37,19 @@ module.exports = {
           error: 'Movie not found',
         });
       }
-      let characters = await MovieService.getCharacters(movie.characters);
+      const characters = await MovieService.getCharacters(movie.characters);
 
-      if (sortBy) {
-        characters = UtilityService.sortData({ array: characters, objectKey: sortBy, sortDir });
-      }
+      const sortedCharacters = sortBy ? UtilityService.sortData({ array: characters, objectKey: sortBy, sortDir }) : characters;
 
-      if (filterBy && filterValue) {
-        characters = UtilityService.filterCharacters({ array: characters, key: filterBy, value: filterValue });
-      }
+      const filteredCharacters = filterBy && filterValue ? UtilityService.filterCharacters({ array: sortedCharacters, key: filterBy, value: filterValue }) : sortedCharacters;
 
-      const heightData = UtilityService.getHeightData(characters);
+      const heightData = UtilityService.getHeightData(filteredCharacters);
 
       return res.status(200).send({
         message: 'Characters retrieved successfully',
-        data: characters,
+        data: filteredCharacters,
         meta: {
-          characterCount: characters.length,
+          characterCount: filteredCharacters.length,
           ...heightData,
         },
       });
