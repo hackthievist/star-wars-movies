@@ -116,3 +116,10 @@ npm-debug.log
 nbproject
 .idea
 .node_history
+
+################################################
+# Docker Configuration
+#
+# Docker secrets and .envs
+################################################
+docker-config/secrets.env
