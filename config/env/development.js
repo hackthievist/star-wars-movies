@@ -5,7 +5,7 @@ module.exports = {
       adapter: 'sails-postgresql',
       pool: true,
       ssl: true,
-      url: process.env.DB_URL,
+      url: process.env.DATABASE_URL,
     },
   },
   models: {
@@ -18,6 +18,7 @@ module.exports = {
     },
   },
   redis: {
-    url: process.env.REDIS_URL,
+    host: process.env.REDIS_HOST,
+    port: process.env.REDIS_PORT,
   }
 };
