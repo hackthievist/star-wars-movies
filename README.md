@@ -33,11 +33,22 @@ yarn start
 ```
 
 * Navigate to [localhost:1400](http://localhost:1400). Please note `1400` is the default port used, you can change this in `.env`.
-`
+` d
+
+## Testing
+
+* Tests are written using the [Mocha](https://mochajs.org/) library.
+* To run tests with `yarn` use:
+
+```shell
+yarn test
+```
 
 ## Docker
 
 ### Using Docker Standalone - Compose (Recomended for local development)
+
+* Copy the file `docker-config/secrets.env.example` to `docker-config/secrets.env` and substitute the settings to match your development environment.
 
 Make sure postgres is installed locally by running `psql`
 
@@ -66,4 +77,6 @@ docker-compose down
 * Backend Language + Framework: Nodejs + Sails.js
 * Database: PostgreSQL
 * Hosting Server: Heroku
+* Testing Framework: Mocha
 * Container Platform: Docker
+* Cache: Redis
