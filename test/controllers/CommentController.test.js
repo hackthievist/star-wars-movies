@@ -59,19 +59,15 @@ describe('CommentController', () => {
   });
 
   describe('#list() [GET /movies/:id/comments]', () => {
-    it('should return 200: Comments retrieved successfully', (done) => {
-      request(sails.hooks.http.app)
+    it('should return 200: Comments retrieved successfully', async () => {
+      const result = await request(sails.hooks.http.app)
         .get(`/movies/${dbData[0].id}/comments`)
-        .expect(200)
-        .end((err, result) => {
-          if (err) return done(err);
-          result.body.should.have.property('message', 'Comments retrieved successfully');
-          result.body.should.have.property('data');
-          result.body.data.should.be.an('object').and.contain.keys(['movie', 'comments']);
-          result.body.data.comments.should.be.an('array').with.lengthOf(1);
-          result.body.data.comments[0].should.be.an('object').and.contain.keys(requiredKeys);
-          return done();
-        });
+        .expect(200);
+      result.body.should.have.property('message', 'Comments retrieved successfully');
+      result.body.should.have.property('data');
+      result.body.data.should.be.an('object').and.contain.keys(['movie', 'comments']);
+      result.body.data.comments.should.be.an('array').with.lengthOf(1);
+      result.body.data.comments[0].should.be.an('object').and.contain.keys(requiredKeys);
     });
   });
 });
