@@ -23,7 +23,7 @@
     "grunt-sync": "0.5.2",
     "husky": "^3.0.4",
     "include-all": "^1.0.0",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^2.6.7",
     "rc": "1.0.1",
     "sails": "~0.12.13",
     "sails-disk": "~0.10.9",
